@@ -1,0 +1,12 @@
+<form action="{% url 'predictions:vote' %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1>Who will win {{ tournament_name }}?</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for team in team_list %}
+        <input type="radio" name="team" id="team{{ forloop.counter }}" value="{{ team.id }}">
+        <label for="team{{ forloop.counter }}">{{ team.name }}</label><br>
+    {% endfor %}
+</fieldset>
+<input type="submit" value="Submit prediction">
+</form>
