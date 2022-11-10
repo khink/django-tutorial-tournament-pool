@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Tournament
 
@@ -12,7 +12,7 @@ def index(request):
 
 
 def detail(request, tournament_id):
-    tournament = Tournament.objects.get(id=tournament_id)
+    tournament = get_object_or_404(Tournament, pk=tournament_id)
     teams = tournament.team_set.all()
     context = {
         "tournament_name": tournament.name,
