@@ -1,0 +1,11 @@
+<h1>{{ tournament_name }}</h1>
+
+{% if team_list %}
+    <ul>
+    {% for team in team_list %}
+        <li>{{ team.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No teams are available.</p>
+{% endif %}
