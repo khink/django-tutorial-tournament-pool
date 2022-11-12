@@ -1,0 +1,8 @@
+<p>
+    <a href="{% url 'predictions:vote' %}">Cast your prediction</a>
+</p>
+<ul>
+{% for prediction in prediction_list %}
+    <li>{{ prediction }}</li>
+{% endfor %}
+</ul>
