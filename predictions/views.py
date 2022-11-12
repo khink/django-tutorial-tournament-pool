@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
+from django.views import generic
 
 from tournaments.models import Team, Tournament
 
@@ -34,13 +35,14 @@ def create(request):
         return HttpResponseRedirect(reverse("predictions:list"))
 
 
-def prediction_list(request):
-    try:
-        tournament = Tournament.objects.last()
-    except Tournament.DoesNotExist:
-        raise Http404("No tournament exists. Create one in the admin.")
+class PredictionListView(generic.ListView):
+    template_name = "predictions/prediction_list.html"
+    context_object_name = "prediction_list"
 
-    context = {
-        "prediction_list": tournament.prediction_set.all(),
-    }
-    return render(request, "predictions/prediction_list.html", context)
+    def get_queryset(self):
+        try:
+            tournament = Tournament.objects.last()
+        except Tournament.DoesNotExist:
+            raise Http404("No tournament exists. Create one in the admin.")
+
+        return tournament.prediction_set.all()
