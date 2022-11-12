@@ -40,9 +40,8 @@ class PredictionListView(generic.ListView):
     context_object_name = "prediction_list"
 
     def get_queryset(self):
-        try:
-            tournament = Tournament.objects.last()
-        except Tournament.DoesNotExist:
-            raise Http404("No tournament exists. Create one in the admin.")
+        tournament = Tournament.objects.last()
+        if not tournament:
+            raise Http404()
 
         return tournament.prediction_set.all()
