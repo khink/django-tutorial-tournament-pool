@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'predictions/style.css' %}">
+
 <form action="{% url 'predictions:vote' %}" method="post">
 {% csrf_token %}
 <fieldset>

@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'predictions/style.css' %}">
+
 <p>
     <a href="{% url 'predictions:vote' %}">Cast your prediction</a>
 </p>
