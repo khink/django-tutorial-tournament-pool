@@ -16,6 +16,7 @@ def create(request):
 
     try:
         selected_team = tournament.team_set.get(pk=request.POST["team"])
+        name = request.POST["name"]
     except (KeyError, Team.DoesNotExist):
         # Redisplay the form.
         teams = tournament.team_set.all()
@@ -29,7 +30,9 @@ def create(request):
             },
         )
     else:
-        prediction = Prediction(tournament=tournament, winning_team=selected_team)
+        prediction = Prediction(
+            tournament=tournament, winning_team=selected_team, name=name
+        )
         prediction.save()
 
         return HttpResponseRedirect(reverse("predictions:list"))

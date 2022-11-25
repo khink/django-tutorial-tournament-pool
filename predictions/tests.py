@@ -60,6 +60,7 @@ class PredictionWebTests(WebTest):
 
         # Select a team and submit
         form["team"] = team.pk
+        form["name"] = "John Doe"
         post_submit_page = form.submit().follow()
         self.assertEqual(
             post_submit_page.request.path,
@@ -71,3 +72,4 @@ class PredictionWebTests(WebTest):
         )
         prediction = Prediction.objects.get()
         self.assertEqual(prediction.winning_team, team)
+        self.assertEqual(prediction.name, "John Doe")
