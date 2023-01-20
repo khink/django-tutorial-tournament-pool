@@ -101,3 +101,26 @@ class AdminWebTests(WebTest):
         assert Prediction.objects.count() == 1
         prediction = Prediction.objects.get()
         assert prediction.name == "My prediction"
+
+
+def test_create_prediction_pytest(django_app, admin_user):
+    tournament = Tournament.objects.create(name="Soccer Worlds 2022")
+    team = Team.objects.create(name="Netherlands", tournament=tournament)
+    assert Prediction.objects.exists() is False
+
+    changelist_url = reverse("admin:predictions_prediction_changelist")
+    predictions_changelist_page = django_app.get(changelist_url, user=admin_user)
+    add_prediction_page = predictions_changelist_page.click("Add prediction")
+
+    assert tournament.name in add_prediction_page
+    assert team.name in add_prediction_page
+    form = add_prediction_page.forms["prediction_form"]
+    form["name"] = "My prediction"
+    form["tournament"] = tournament.pk
+    form["winning_team"] = team.pk
+    result_page = form.submit().follow()
+    assert result_page.request.path == changelist_url
+
+    assert Prediction.objects.count() == 1
+    prediction = Prediction.objects.get()
+    assert prediction.name == "My prediction"
