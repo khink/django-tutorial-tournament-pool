@@ -10,3 +10,14 @@ This is just a way of checking out [Django's tutorial](https://docs.djangoprojec
 This project requires Django and some handy add-ons. To install the required Python packages:
 
     pip install -r requirements.txt
+
+
+## Testing
+
+Run tests with either:
+
+    ./manage.py test
+
+or
+
+    pytest
