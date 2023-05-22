@@ -50,30 +50,26 @@ class PredictionWebTests(WebTest):
         tournament = Tournament.objects.create(name="Soccer Worlds 2022")
         team = Team.objects.create(name="Netherlands", tournament=tournament)
         response = self.app.get(reverse("predictions:vote"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, f"Who will win {tournament}?")
+        assert response.status_code == 200
+        assert f"Who will win {tournament}?" in response
 
         # Play around with Webtest's form API
         form = response.form
         field = form["team"]
-        self.assertEqual(field.options, [(str(team.pk), False, None)])
-        self.assertEqual(field.value, None)
+        assert field.options == [(str(team.pk), False, None)]
+        assert field.value == None
 
         # Select a team and submit
         form["team"] = team.pk
         form["name"] = "John Doe"
         post_submit_page = form.submit().follow()
-        self.assertEqual(
-            post_submit_page.request.path,
-            reverse("predictions:list"),
-            "We should be redirected to the predictions list",
-        )
-        self.assertEqual(
-            Prediction.objects.count(), 1, "A Prediction should have been created"
-        )
+        assert post_submit_page.request.path == reverse(
+            "predictions:list"
+        ), "We should be redirected to the predictions list"
+        assert Prediction.objects.count() == 1, "A Prediction should have been created"
         prediction = Prediction.objects.get()
-        self.assertEqual(prediction.winning_team, team)
-        self.assertEqual(prediction.name, "John Doe")
+        assert prediction.winning_team == team
+        assert prediction.name == "John Doe"
 
 
 class AdminWebTests(WebTest):
