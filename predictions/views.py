@@ -9,9 +9,10 @@ from .models import Prediction
 
 
 def create(request):
-    try:
-        tournament = Tournament.objects.last()
-    except Tournament.DoesNotExist:
+    # This is very arbitrary, but we're ONLY interested in the last tournament.
+    tournament = Tournament.objects.last()
+
+    if not tournament:
         raise Http404("No tournament exists. Create one in the admin.")
 
     try:
