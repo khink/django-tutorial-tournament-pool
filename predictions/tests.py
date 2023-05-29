@@ -43,13 +43,11 @@ class PredictionIndexViewTests(TestCase):
 
 
 class PredictionWebTests(WebTest):
-    def test_cast_prediction(self):
-        """
-        We should be able to cast a prediction.
-        """
+    def test_add_prediction(self):
+        """We should be able to predict who's going to win a tournament."""
         tournament = Tournament.objects.create(name="Soccer Worlds 2022")
         team = Team.objects.create(name="Netherlands", tournament=tournament)
-        response = self.app.get(reverse("predictions:vote"))
+        response = self.app.get(reverse("predictions:add_prediction"))
         assert response.status_code == 200
         assert f"Who will win {tournament}?" in response
 
