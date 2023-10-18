@@ -21,3 +21,9 @@ Run tests with either:
 or
 
     pytest
+
+### Coverage
+
+To measure coverage:
+
+    make coverage

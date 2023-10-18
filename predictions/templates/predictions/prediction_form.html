@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="{% static 'predictions/style.css' %}">
 
-<form action="{% url 'predictions:vote' %}" method="post">
+<form action="{% url 'predictions:add_prediction' %}" method="post">
 {% csrf_token %}
 <fieldset>
     <legend><h1>Who will win {{ tournament_name }}?</h1></legend>

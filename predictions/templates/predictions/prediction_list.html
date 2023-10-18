@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static 'predictions/style.css' %}">
 
 <p>
-    <a href="{% url 'predictions:vote' %}">Cast your prediction</a>
+    <a href="{% url 'predictions:add_prediction' %}">Add your prediction</a>
 </p>
 <ul>
 {% for prediction in prediction_list %}
