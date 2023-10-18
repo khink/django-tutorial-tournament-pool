@@ -1,3 +1,4 @@
 django
 django-webtest
 pytest-django
+coverage
