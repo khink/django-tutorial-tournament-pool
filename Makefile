@@ -12,3 +12,8 @@ coverage: env clean-coverage-files
 	env/bin/coverage html
 	env/bin/coverage xml
 
+coverage-parallel: env clean-coverage-files
+	env/bin/coverage run --parallel-mode -m pytest -n auto
+	env/bin/coverage report
+	env/bin/coverage html
+	env/bin/coverage xml
