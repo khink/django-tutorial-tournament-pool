@@ -2,3 +2,4 @@ django
 django-webtest
 pytest-django
 coverage
+pytest-xdist
